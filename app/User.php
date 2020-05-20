@@ -43,16 +43,20 @@ class User extends Authenticatable
        return "https://www.gravatar.com/avatar/".md5(\strtolower(\trim($email)))."?s=".$size;
 
    }
-
+   public function getUrlAttribute(){
+        return '#';
+    }
+    // Question Favourite Control
    public function favourites(){
        return $this->belongsToMany(Question::class,'favourites')->withTimestamps();
    }
 
+    // Vote Question & Answer Control
    public function voteQuestions(){
-       return $this->morphedByMany(Question::class,'votable');
+       return $this->morphedByMany(Question::class,'votable')->withTimestamps();
    }
    public function voteAnswers(){
-       return $this->morphedByMany(Answer::class,'votable');
+       return $this->morphedByMany(Answer::class,'votable')->withTimestamps();
    }
    public function voteQuestion(Question $question,$vote){
        $voteQuestions = $this->voteQuestions();

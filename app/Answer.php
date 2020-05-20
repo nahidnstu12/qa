@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model
 {
+     // vote answer control
     use VotableTraites;
+    
      protected $fillable = ['body','user_id'];
 
      
@@ -19,8 +21,9 @@ class Answer extends Model
 
     }
     public function getBodyHtmlAttribute(){
-        return \Parsedown::instance()->text($this->body);
+        return clean(\Parsedown::instance()->text($this->body));
     }
+    // Answers Count Each Question
     public static function boot(){
         parent::boot();
         static::created(function($answer){
@@ -39,8 +42,8 @@ class Answer extends Model
     public function getIsBestAttribute(){
         return $this->isBest();
     }
-    public function isBest(){
+    // best answer control
+    private function isBest(){
         return $this->id === $this->question->best_answer_id ;
     }
-    
 }

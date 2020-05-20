@@ -1,9 +1,8 @@
 <?php
-
-use App\Answer;
 use Illuminate\Database\Seeder;
 use App\User;
 use App\Question;
+use App\Answer;
 class VotablesTable extends Seeder
 {
     /**
@@ -14,7 +13,7 @@ class VotablesTable extends Seeder
     public function run()
     {
         //
-        DB::table('votables')->where('votable_type','App\Question')->delete();
+        DB::table('votables')->delete();
 
         $users = User::all();
         $numberOfUsers = $users->count();

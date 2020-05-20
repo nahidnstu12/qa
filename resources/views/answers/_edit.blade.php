@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                    <h2>Editting Answer {{$question->title}}</h2>
+                    <h2>Editing Answer for question: <strong>{{$question->title}}</strong></h2>
                     </div>
                 </div>
 

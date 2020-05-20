@@ -7,6 +7,7 @@ use Parsedown;
 
 class Question extends Model
 {
+    // Vote Question Control
     use VotableTraites;
 
     protected $fillable = ['title','body'];
@@ -43,16 +44,27 @@ class Question extends Model
         }
         return "unanswered";
     }
-    public function getBodyHtmlAttribute(){
-        return $this->bodyHtml();
-    }
 
-     
+    // site cripting attack protection
+    public function getBodyHtmlAttribute(){
+        return clean($this->bodyHtml());
+    }
+    public function excerpt($len){
+        return str_limit(strip_tags($this->bodyHtml()),$len);
+    }
+    private function bodyHtml(){
+        return \Parsedown::instance()->text($this->body);
+    }
+    public function getExcereptAttribute(){
+        return $this->excerpt(250);
+     }
+
+    //  Accept best answer control
     public function acceptBestAnswer(Answer $answer){
         $this->best_answer_id = $answer->id;
         $this->save();
     }
-
+    // Favourited Question Control 
     public function favourites(){
        return $this->belongsToMany(User::class,'favourites')->withTimestamps();
    }
@@ -61,19 +73,10 @@ class Question extends Model
    }
    public function getIsFavouritedAttribute(){
         return $this->isFavourited();
-    //    return $this->favourites()->where('user_id',auth()->id())->first()>0;
    }
    public function getFavouritesCountAttribute(){
        return $this->favourites()->count();
    }
-   public function getExcereptAttribute(){
-      return $this->excerpt(250);
-   }
-   public function excerpt($len){
-         return str_limit(strip_tags($this->bodyHtml()),$len);
-   }
-   private function bodyHtml(){
-        return \Parsedown::instance()->text($this->body);
-   }
+  
    
 } 

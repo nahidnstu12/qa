@@ -27,13 +27,13 @@
   .vote, .answer{
     width:60px;
     height:60px;
-   
+    
   }
   .status{
     &.unanswered{
       border:none;
     }
-    &.answerd{
+    &.answered{
       border:1px solid $color-green;
       color:$color-green;
     }
@@ -92,4 +92,10 @@ form .form-delete{
             color: $green;
         }
     }
+}
+.post{
+  padding: 20px 0;
+  &:not(:last-child){
+    border-bottom: 1px solid rgba($black, .1);
+  }
 }

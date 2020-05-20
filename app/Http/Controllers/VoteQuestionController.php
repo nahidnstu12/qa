@@ -15,8 +15,9 @@ class VoteQuestionController extends Controller
     }
     public function __invoke(Question $question)
     {
-        $vote = (int) request()->vote;
-        auth()->user()->voteAnswer($question,$vote);
-        return back();
+        // $vote = (int) request()->vote;
+        // auth()->user()->voteQuestion($question,$vote);
+        // return \back();
+        dd('vote');
     }
 }
