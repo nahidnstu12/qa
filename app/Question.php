@@ -11,7 +11,7 @@ class Question extends Model
     use VotableTraites;
 
     protected $fillable = ['title','body'];
-    protected $appends = ['created_date'];
+    protected $appends = ['created_date','favourites_count','is_favourited'];
         // one user,many questions
     public function user(){
         return $this->belongsTo(User::class);

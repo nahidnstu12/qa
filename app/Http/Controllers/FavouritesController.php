@@ -13,10 +13,10 @@ class FavouritesController extends Controller
     }
     public function store(Question $question){
         $question->favourites()->attach(auth()->id());
-        return back();
+        // return back();
     }
     public function destroy(Question $question){
         $question->favourites()->detach(auth()->id());
-        return back();
+        // return back();
     }
 }

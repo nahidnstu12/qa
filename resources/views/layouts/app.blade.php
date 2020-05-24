@@ -9,8 +9,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('public/js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -78,5 +76,10 @@
             @yield('content')
         </main>
     </div>
+    <!-- Scripts -->
+    <script>
+        window.Auth ={!! json_encode(['isSigned'=>Auth::check(),'user'=>Auth::user()]) !!}
+    </script>
+    <script src="{{ asset('public/js/app.js') }}" defer></script>
 </body>
 </html>
