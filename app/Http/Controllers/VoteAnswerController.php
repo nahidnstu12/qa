@@ -16,8 +16,7 @@ class VoteAnswerController extends Controller
     public function __invoke(Answer $answer)
     {
         $vote = (int) request()->vote;
-        $votesCount = auth()->user()->voteAnswer($answer,$vote);
-        dd('<script>alert($votesCount)</script>');
+        $votesCount = Auth()->user()->voteAnswer($answer,$vote);
         if(\request()->expectsJson()){
             return \response()->json([
                 'message'=> 'Thanks for feedback',

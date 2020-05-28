@@ -75,13 +75,15 @@ class User extends Authenticatable
            $relationship->updateExistingPivot($model,['vote'=>$vote]);
        }
        else{
-           $relationship->attach($model,['vote' =>$vote]);
-          
+           $relationship->attach($model,['vote' =>$vote]);          
        }
        $model->load('votes');
        $downVotes =(int)$model->downVotes()->sum('vote');
        $upVotes =(int)$model->upVotes()->sum('vote');
-       $model->votes_count = $upVotes + $downVotes;
+
+    //    $model->votes_count = ($upVotes > abs($downVotes)) ? $upVotes :(($upVotes < abs($downVotes)) ?  $downVotes : 0);
+
+       $model->votes_count = $upVotes +  $downVotes;
        $model->save();
        return $model->votes_count;
    }

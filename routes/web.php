@@ -23,7 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('questions','QuestionsController')->except('show');
 
-Route::resource('questions.answers','AnswersController')->except('index','create','show');
+Route::resource('questions.answers','AnswersController')->except('create','show');
 
 Route::get('/questions/{slug}','QuestionsController@show')->name('questions.show');
 
@@ -32,5 +32,5 @@ Route::post('/answers/{answer}/accept','AcceptAnswerController')->name('accept.a
 Route::post('/questions/{question}/favourites','FavouritesController@store');//->name('questions.favourite');
 Route::delete('/questions/{question}/favourites','FavouritesController@destroy');//->name('questions.unfavourite');
 
-Route::post('/questions/{$question}/vote','VoteQuestionController'); //->name('up.vote');
-Route::post('/answers/{$answer}/vote','VoteAnswerController');
+Route::post('/questions/{question}/vote','VoteQuestionController'); //->name('up.vote');
+Route::post('/answers/{answer}/vote','VoteAnswerController');

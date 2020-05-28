@@ -11,20 +11,17 @@ class Question extends Model
     use VotableTraites;
 
     protected $fillable = ['title','body'];
-    protected $appends = ['created_date','favourites_count','is_favourited'];
+    protected $appends = ['created_date','favourites_count','is_favourited','body_html'];
         // one user,many questions
     public function user(){
         return $this->belongsTo(User::class);
-
     }
         // one question,many answers
     public function answers(){
         return $this->hasMany(Answer::class)->orderBy('votes_count','desc');
-
     }
 
-     public function setTitleAttribute( $value)
-    {
+    public function setTitleAttribute( $value){
         $this->attributes['title'] = $value;
         $this->attributes['slug'] = str_slug($value);
     }

@@ -23,11 +23,12 @@
                 @endcan
 
                 @can('delete', $question)
-                <form action="{{route('questions.destroy',$question->id)}}" method="POST" class="form-delete" style="display:inline">
-                    @method('DELETE')
-                    @csrf
-                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                </form> 
+                    <form action="{{route('questions.destroy',$question->id)}}" method="POST" 
+                        class="form-delete"  style="display:inline">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form> 
                 @endcan 
 
             </div>

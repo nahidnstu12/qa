@@ -41,7 +41,7 @@ export default {
     },
     data(){
         return {
-            count : this.model.votes_count,
+            count : this.model.votes_count || 0,
             id:this.model.id
         }
     },
@@ -68,32 +68,13 @@ export default {
             }
             axios.post(this.endpoint,{vote})
             .then(res=>{
-                console.log(res)
                 this.$toast.success(res.data.message, "Success", {
                     timeout: 3000,
                     position: 'topRight'
                 });
-                this.count = res.data.votesCount
-                console.log(res)
+                this.count = res.data.votesCount                
             })
-        //     .catch(function (error) {
-        //     if (error.response) {
-        //     // The request was made and the server responded with a status code
-        //     // that falls out of the range of 2xx
-        //     console.log(error.response.data);
-        //     console.log(error.response.status);
-        //     console.log('Error',error.response.headers);
-        //     } else if (error.request) {
-        //     // The request was made but no response was received
-        //     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-        //     // http.ClientRequest in node.js
-        //     console.log(error.request);
-        //     } else {
-        //     // Something happened in setting up the request that triggered an Error
-        //     console.log('Error', error.message);
-        //     }
-        //     console.log('Error',error.config);
-        // });
+       
         },
          voteUp(){
             this._vote(1)
