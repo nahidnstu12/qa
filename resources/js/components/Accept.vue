@@ -35,8 +35,8 @@ export default {
             return !this.canAccept && this.isBest
         },
          endpoint () {
-            return `http://localhost:84/qa/answers/${this.id}/accept`;
-            // return `/answers/${this.id}/accept`;
+            // return `http://localhost:84/qa/answers/${this.id}/accept`;
+            return `/answers/${this.id}/accept`;
         },
 
     },

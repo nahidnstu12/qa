@@ -1737,7 +1737,8 @@ __webpack_require__.r(__webpack_exports__);
       return !this.canAccept && this.isBest;
     },
     endpoint: function endpoint() {
-      return "http://localhost:84/qa/answers/".concat(this.id, "/accept"); // return `/answers/${this.id}/accept`;
+      // return `http://localhost:84/qa/answers/${this.id}/accept`;
+      return "/answers/".concat(this.id, "/accept");
     }
   },
   methods: {
@@ -1769,6 +1770,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Vote__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Vote */ "./resources/js/components/Vote.vue");
 /* harmony import */ var _UserInfo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserInfo */ "./resources/js/components/UserInfo.vue");
+/* harmony import */ var _mixins_modifications__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/modifications */ "./resources/js/mixins/modifications.js");
 //
 //
 //
@@ -1799,6 +1801,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1807,9 +1810,9 @@ __webpack_require__.r(__webpack_exports__);
     Vote: _Vote__WEBPACK_IMPORTED_MODULE_0__["default"],
     UserInfo: _UserInfo__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  mixins: [_mixins_modifications__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
-      editing: false,
       body: this.answer.body,
       bodyHtml: this.answer.body_html,
       id: this.answer.id,
@@ -1818,56 +1821,25 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    edit: function edit() {
+    setEditCache: function setEditCache() {
       this.beforeEdit = this.body;
-      this.editing = true;
     },
-    cancel: function cancel() {
+    restoreFormCache: function restoreFormCache() {
       this.body = this.beforeEdit;
       this.editing = false;
     },
-    update: function update() {
+    payload: function payload() {
+      return {
+        body: this.body
+      };
+    },
+    "delete": function _delete() {
       var _this = this;
 
-      axios.patch(this.endpoint, {
-        body: this.body
-      }).then(function (res) {
-        _this.editing = false;
-        _this.bodyHtml = res.data.body_html;
+      axios["delete"](this.endpoint).then(function (res) {
+        _this.$toast.success(res.data.message, 'Success');
 
-        _this.$toast.success(res.data.message, 'sucess', {
-          timeout: 3000
-        });
-      })["catch"](function (err) {
-        _this.$toast.error(err.response.data.message, 'Error', {
-          timeout: 3000
-        });
-      });
-    },
-    destroy: function destroy() {
-      var _this2 = this;
-
-      this.$toast.question('Are you sure about that?', 'Confirm', {
-        timeout: 10000,
-        close: false,
-        overlay: true,
-        displayMode: 'once',
-        id: 'question',
-        zindex: 999,
-        title: 'Hey',
-        position: 'center',
-        buttons: [['<button><b>YES</b></button>', function (instance, toast) {
-          axios["delete"](_this2.endpoint).then(function (res) {
-            _this2.$emit('deleted');
-          });
-          instance.hide({
-            transitionOut: 'fadeOut'
-          }, toast, 'button');
-        }, true], ['<button>NO</button>', function (instance, toast) {
-          instance.hide({
-            transitionOut: 'fadeOut'
-          }, toast, 'button');
-        }]]
+        _this.$emit('deleted');
       });
     }
   },
@@ -1876,7 +1848,8 @@ __webpack_require__.r(__webpack_exports__);
       return this.body.length < 10;
     },
     endpoint: function endpoint() {
-      return "http://localhost:84/qa/questions/".concat(this.questionId, "/answers/").concat(this.id); // return `/questions/${this.questionId}/answers/${this.id}`;
+      // return `http://localhost:84/qa/questions/${this.questionId}/answers/${this.id}`;
+      return "/questions/".concat(this.questionId, "/answers/").concat(this.id);
     }
   }
 });
@@ -1947,7 +1920,8 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       return "".concat(this.count, " ").concat(this.count > 1 ? 'Answers' : 'Answer');
     },
     endpoint: function endpoint() {
-      return "http://localhost:84/qa/questions/".concat(this.questionId, "/answers"); // return `/questions/${this.questionId}/answers`;
+      // return `http://localhost:84/qa/questions/${this.questionId}/answers`;
+      return "/questions/".concat(this.questionId, "/answers");
     }
   },
   methods: {
@@ -2010,7 +1984,8 @@ __webpack_require__.r(__webpack_exports__);
       return ['favourite', 'mt-2', !this.isSigned ? 'off' : this.isFavourited ? 'favourited' : ''];
     },
     endpoint: function endpoint() {
-      return "http://localhost:84/qa/questions/".concat(this.id, "/favourites"); // return `/questions/${this.id}/favourites`;
+      // return `http://localhost:84/qa/questions/${this.id}/favourites`;
+      return "/questions/".concat(this.id, "/favourites");
     }
   },
   methods: {
@@ -2090,7 +2065,8 @@ __webpack_require__.r(__webpack_exports__);
       return !this.isSigned || this.body.length < 10;
     },
     endpoint: function endpoint() {
-      return "http://localhost:84/qa/questions/".concat(this.questionId, "/answers"); // return `/questions/${this.questionId}/answers`;
+      // return `http://localhost:84/qa/questions/${this.questionId}/answers`;
+      return "/questions/".concat(this.questionId, "/answers");
     }
   },
   methods: {
@@ -2128,6 +2104,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Vote__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Vote */ "./resources/js/components/Vote.vue");
 /* harmony import */ var _UserInfo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserInfo */ "./resources/js/components/UserInfo.vue");
+/* harmony import */ var _mixins_modifications__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/modifications */ "./resources/js/mixins/modifications.js");
 //
 //
 //
@@ -2180,6 +2157,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2188,12 +2166,12 @@ __webpack_require__.r(__webpack_exports__);
     Vote: _Vote__WEBPACK_IMPORTED_MODULE_0__["default"],
     UserInfo: _UserInfo__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  mixins: [_mixins_modifications__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
       title: this.question.title,
       body: this.question.body,
       bodyHtml: this.question.body_html,
-      editing: false,
       questionId: this.question.id,
       beforeEdit: {}
     };
@@ -2203,69 +2181,36 @@ __webpack_require__.r(__webpack_exports__);
       return this.body.length < 10 || this.title.length < 10;
     },
     endpoint: function endpoint() {
-      return "http://localhost:84/qa/questions/".concat(this.questionId); // return `/questions/${this.questionId}`;
+      // return `http://localhost:84/qa/questions/${this.questionId}`;
+      return "/questions/".concat(this.questionId);
     }
   },
   methods: {
-    edit: function edit() {
+    setEditCache: function setEditCache() {
       this.beforeEdit = {
         body: this.body,
         title: this.title
       };
-      this.editing = true;
     },
-    cancel: function cancel() {
+    restoreFormCache: function restoreFormCache() {
       this.body = this.beforeEdit.body;
       this.title = this.beforeEdit.title;
-      this.editing = false;
     },
-    update: function update() {
-      var _this = this;
-
-      axios.put(this.endpoint, {
+    payload: function payload() {
+      return {
         body: this.body,
         title: this.title
-      }).then(function (res) {
-        _this.editing = false;
-        _this.bodyHtml = res.data.body_html;
-
-        _this.$toast.success(res.data.message, 'Success', {
-          timeout: 3000
-        });
-      })["catch"](function (err) {
-        _this.$toast.error(err.response.data.message, 'Error', {
-          timeout: 3000
-        });
-      });
+      };
     },
-    destroy: function destroy() {
-      var _this2 = this;
+    "delete": function _delete() {
+      var _this = this;
 
-      this.$toast.question('Are you sure about that?', 'Confirm', {
-        timeout: 10000,
-        close: false,
-        overlay: true,
-        displayMode: 'once',
-        id: 'question',
-        zindex: 999,
-        title: 'Hey',
-        position: 'center',
-        buttons: [['<button><b>YES</b></button>', function (instance, toast) {
-          axios["delete"](_this2.endpoint).then(function (res) {
-            _this2.$toast.success(res.data.message, 'Success');
-          });
-          setTimeout(function () {
-            window.location.href = '/qa';
-          }, 3000);
-          instance.hide({
-            transitionOut: 'fadeOut'
-          }, toast, 'button');
-        }, true], ['<button>NO</button>', function (instance, toast) {
-          instance.hide({
-            transitionOut: 'fadeOut'
-          }, toast, 'button');
-        }]]
+      axios["delete"](this.endpoint).then(function (res) {
+        _this.$toast.success(res.data.message, 'Success');
       });
+      setTimeout(function () {
+        window.location.href = '/';
+      }, 3000);
     }
   }
 });
@@ -2389,7 +2334,8 @@ __webpack_require__.r(__webpack_exports__);
       return this.isSigned ? '' : 'off';
     },
     endpoint: function endpoint() {
-      return "http://localhost:84/qa/".concat(this.name, "s/").concat(this.id, "/vote"); // return `//${this.name}/${this.id}/vote`;
+      // return `http://localhost:8000/qa/${this.name}s/${this.id}/vote`;
+      return "/".concat(this.name, "s/").concat(this.id, "/vote");
     }
   },
   data: function data() {
@@ -39370,7 +39316,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "ml-auto" }, [
       _c(
         "a",
-        { staticClass: "btn btn-outline-secondary", attrs: { href: "/qa" } },
+        { staticClass: "btn btn-outline-secondary", attrs: { href: "/" } },
         [_vm._v("Back")]
       )
     ])
@@ -52471,6 +52417,80 @@ __webpack_require__.r(__webpack_exports__);
 
 var eventBus = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 /* harmony default export */ __webpack_exports__["default"] = (eventBus);
+
+/***/ }),
+
+/***/ "./resources/js/mixins/modifications.js":
+/*!**********************************************!*\
+  !*** ./resources/js/mixins/modifications.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      editing: false
+    };
+  },
+  methods: {
+    edit: function edit() {
+      this.setEditCache();
+      this.editing = true;
+    },
+    cancel: function cancel() {
+      this.restoreFormCache();
+      this.editing = true;
+    },
+    setEditCache: function setEditCache() {},
+    restoreFormCache: function restoreFormCache() {},
+    update: function update() {
+      var _this = this;
+
+      axios.put(this.endpoint, this.payload()).then(function (res) {
+        _this.editing = false;
+        _this.bodyHtml = res.data.body_html;
+
+        _this.$toast.success(res.data.message, 'Success', {
+          timeout: 3000
+        });
+      })["catch"](function (err) {
+        _this.$toast.error(err.response.data.message, 'Error', {
+          timeout: 3000
+        });
+      });
+    },
+    payload: function payload() {},
+    destroy: function destroy() {
+      var _this2 = this;
+
+      this.$toast.question('Are you sure about that?', 'Confirm', {
+        timeout: 10000,
+        close: false,
+        overlay: true,
+        displayMode: 'once',
+        id: 'question',
+        zindex: 999,
+        title: 'Hey',
+        position: 'center',
+        buttons: [['<button><b>YES</b></button>', function (instance, toast) {
+          _this2["delete"]();
+
+          instance.hide({
+            transitionOut: 'fadeOut'
+          }, toast, 'button');
+        }, true], ['<button>NO</button>', function (instance, toast) {
+          instance.hide({
+            transitionOut: 'fadeOut'
+          }, toast, 'button');
+        }]]
+      });
+    },
+    "delete": function _delete() {}
+  }
+});
 
 /***/ }),
 

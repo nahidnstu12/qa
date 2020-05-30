@@ -22,7 +22,7 @@
                         <div class="d-flex align-items-center">
                             <h2> {{title}}</h2>
                             <div class="ml-auto">
-                                <a href="/qa" class="btn btn-outline-secondary">Back</a>
+                                <a href="/" class="btn btn-outline-secondary">Back</a>
                             </div>
                         </div>
                     </div>
@@ -53,16 +53,17 @@
 <script>
 import Vote from './Vote'
 import UserInfo from './UserInfo'
+import modification from '../mixins/modifications'
 
 export default {
     props:['question'],
     components:{Vote,UserInfo},
+     mixins:[modification],
     data(){
         return{
             title :this.question.title,
             body :this.question.body,
             bodyHtml :this.question.body_html,
-            editing : false,
             questionId : this.question.id,
             beforeEdit : {},
 
@@ -73,72 +74,37 @@ export default {
             return this.body.length <10 || this.title.length < 10
         },
         endpoint () {
-            return `http://localhost:84/qa/questions/${this.questionId}`;
-            // return `/questions/${this.questionId}`;
+            // return `http://localhost:84/qa/questions/${this.questionId}`;
+            return `/questions/${this.questionId}`;
         },
     },
     methods:{
-         edit(){
+        setEditCache(){
             this.beforeEdit = {
                 body:this.body ,
                 title : this.title
             }
-            this.editing = true
         },
-        cancel(){
+        restoreFormCache(){
             this.body = this.beforeEdit.body
             this.title = this.beforeEdit.title
-            this.editing = false
         },
-        update(){
-            axios.put(this.endpoint, {
+        payload(){
+            return {
                 body:this.body ,
                 title : this.title               
-            })
-            .then(res =>{
-               this.editing = false
-               this.bodyHtml = res.data.body_html
-               this.$toast.success(res.data.message,'Success',{timeout:3000})
-            })
-            .catch(err=>{
-                this.$toast.error(err.response.data.message,'Error',{timeout:3000})
-            })
+            }
         },
         
-        destroy(){
-            this.$toast.question('Are you sure about that?','Confirm',{
-                timeout: 10000,
-                close: false,
-                overlay: true,
-                displayMode: 'once',
-                id: 'question',
-                zindex: 999,
-                title: 'Hey',
-                position: 'center',
-                buttons: [
-                    ['<button><b>YES</b></button>',  (instance, toast)=> {
-                    axios.delete(this.endpoint)
-                    .then(res=>{
-                        this.$toast.success(res.data.message,'Success')    
-                    })
-                   setTimeout(() => {
-                       window.location.href = '/qa'
-                   }, 3000);
-                    
-                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-            
-                    }, true],
-                    ['<button>NO</button>', function (instance, toast) {
-            
-                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-            
-                    }],
-                ],
-               
-            });
-           
+        delete(){            
+            axios.delete(this.endpoint)
+            .then(res=>{
+                this.$toast.success(res.data.message,'Success')    
+            })
+            setTimeout(() => {
+                window.location.href = '/'
+            }, 3000);
         },
-
     }
 }
 </script>

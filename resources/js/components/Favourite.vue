@@ -27,8 +27,8 @@ export default {
             ]
         },
         endpoint () {
-            return `http://localhost:84/qa/questions/${this.id}/favourites`;
-            // return `/questions/${this.id}/favourites`;
+            // return `http://localhost:84/qa/questions/${this.id}/favourites`;
+             return `/questions/${this.id}/favourites`;
         },
        
     },

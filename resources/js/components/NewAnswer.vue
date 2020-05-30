@@ -34,8 +34,8 @@ export default {
             return !this.isSigned || this.body.length <10
         },
         endpoint () {
-            return `http://localhost:84/qa/questions/${this.questionId}/answers`;
-            // return `/questions/${this.questionId}/answers`;
+            // return `http://localhost:84/qa/questions/${this.questionId}/answers`;
+            return `/questions/${this.questionId}/answers`;
         },
 
     },

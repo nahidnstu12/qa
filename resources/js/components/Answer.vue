@@ -31,12 +31,13 @@
 <script>
 import Vote from './Vote'
 import UserInfo from './UserInfo'
+import modification from '../mixins/modifications'
 export default {
     props: ['answer'],
     components:{Vote,UserInfo},
+    mixins:[modification],
     data(){
         return{
-            editing : false,
             body : this.answer.body,
             bodyHtml : this.answer.body_html,
             id : this.answer.id,
@@ -45,58 +46,26 @@ export default {
         }
     },
     methods:{
-        edit(){
+        setEditCache(){
             this.beforeEdit = this.body
-            this.editing = true
         },
-        cancel(){
+        restoreFormCache(){
             this.body = this.beforeEdit
             this.editing = false
         },
-        update(){
-            axios.patch(this.endpoint, {
+       payload(){
+           return {
                 body: this.body
-            })
-            .then(res =>{
-               this.editing = false
-               this.bodyHtml = res.data.body_html
-                this.$toast.success(res.data.message,'sucess',{timeout:3000})
-            })
-            .catch(err=>{
-                this.$toast.error(err.response.data.message,'Error',{timeout:3000})
-            })
-        },
+            }
+       },
         
-        destroy(){
-            this.$toast.question('Are you sure about that?','Confirm',{
-                timeout: 10000,
-                close: false,
-                overlay: true,
-                displayMode: 'once',
-                id: 'question',
-                zindex: 999,
-                title: 'Hey',
-                position: 'center',
-                buttons: [
-                    ['<button><b>YES</b></button>',  (instance, toast)=> {
-                        
-                    axios.delete(this.endpoint)
-                    .then(res=>{
-                       this.$emit('deleted')
-                    })
-                    instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-            
-                    }, true],
-                    ['<button>NO</button>', function (instance, toast) {
-            
-                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-            
-                    }],
-                ],
-               
-            });
-           
-        },
+       delete(){
+           axios.delete(this.endpoint)
+            .then(res=>{
+                this.$toast.success(res.data.message,'Success')
+                this.$emit('deleted')
+            })
+       },
 
 
     },
@@ -106,8 +75,8 @@ export default {
             return this.body.length <10
         },
          endpoint () {
-            return `http://localhost:84/qa/questions/${this.questionId}/answers/${this.id}`;
-            // return `/questions/${this.questionId}/answers/${this.id}`;
+            // return `http://localhost:84/qa/questions/${this.questionId}/answers/${this.id}`;
+            return `/questions/${this.questionId}/answers/${this.id}`;
         },
     }
 }

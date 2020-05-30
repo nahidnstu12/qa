@@ -35,8 +35,8 @@ export default {
             return this.isSigned ? '' : 'off'
         },
          endpoint () {
-            return `http://localhost:84/qa/${this.name}s/${this.id}/vote`;
-            // return `//${this.name}/${this.id}/vote`;
+            // return `http://localhost:8000/qa/${this.name}s/${this.id}/vote`;
+            return `/${this.name}s/${this.id}/vote`;
         },
     },
     data(){

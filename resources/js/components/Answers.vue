@@ -42,8 +42,8 @@ export default {
             return `${this.count} ${this.count>1 ? 'Answers':'Answer'}`
         },
         endpoint () {
-            return `http://localhost:84/qa/questions/${this.questionId}/answers`;
-            // return `/questions/${this.questionId}/answers`;
+            // return `http://localhost:84/qa/questions/${this.questionId}/answers`;
+            return `/questions/${this.questionId}/answers`;
         },
 
     },
