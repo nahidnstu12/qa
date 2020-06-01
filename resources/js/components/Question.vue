@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <form class="card-body" v-if="editing"  @submit.prevent="update">
+                <form class="card-body" v-show="authorize('modify',question) && editing"  @submit.prevent="update">
                     <div class="card-title">
                         <input class="form-control form-control-lg" type="text" v-model="title">
                     </div>
@@ -10,14 +10,16 @@
                     <div class="media">
                         <div class="media-body">
                            <div class="form-group">
+                               <m-editor :body="body" :name="uniqueName">
                                 <textarea rows="10" class="form-control" v-model="body"  required></textarea>
+                               </m-editor>
                             </div>
                             <button type="submit" class="btn btn-info" :disabled="invalid">Update</button>
                             <button @click.prevent="cancel" class="btn btn-outline-secondary" type="button">Cancel</button>
                         </div>
                     </div>
                 </form>
-                <div class="card-body" v-else>
+                <div class="card-body" v-show='!editing'>
                     <div class="card-title">
                         <div class="d-flex align-items-center">
                             <h2> {{title}}</h2>
@@ -30,7 +32,7 @@
                     <div class="media">
                         <vote :model="question" name="question"></vote>
                         <div class="media-body">
-                            <div v-html="bodyHtml"></div>
+                            <div v-html="bodyHtml" ref="bodyHtml"></div>
                             <div class="row">
                                 <div class="col-4">
                                     <div class="ml-auto">                       
@@ -51,14 +53,12 @@
     </div>
 </template>
 <script>
-import Vote from './Vote'
-import UserInfo from './UserInfo'
+
 import modification from '../mixins/modifications'
 
 export default {
     props:['question'],
-    components:{Vote,UserInfo},
-     mixins:[modification],
+    mixins:[modification],
     data(){
         return{
             title :this.question.title,
@@ -77,21 +77,25 @@ export default {
             // return `http://localhost:84/qa/questions/${this.questionId}`;
             return `/questions/${this.questionId}`;
         },
+        uniqueName(){
+            return `question-${this.questionId}`
+        }
     },
     methods:{
         setEditCache(){
             this.beforeEdit = {
-                body:this.body ,
+                body:this.body,
                 title : this.title
             }
         },
         restoreFormCache(){
             this.body = this.beforeEdit.body
             this.title = this.beforeEdit.title
+            
         },
         payload(){
             return {
-                body:this.body ,
+                body:this.body,
                 title : this.title               
             }
         },

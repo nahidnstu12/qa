@@ -22,7 +22,9 @@ class Answer extends Model
 
     }
     public function getBodyHtmlAttribute(){
-        return clean(\Parsedown::instance()->text($this->body));
+        return \Parsedown::instance()->text($this->body);
+        // return clean(\Parsedown::instance()->text($this->body));
+
     }
     // Answers Count Each Question
     public static function boot(){

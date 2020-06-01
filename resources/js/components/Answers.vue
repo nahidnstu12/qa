@@ -21,14 +21,17 @@
 <script>
 import Answer from './Answer.vue'
 import NewAnswer from './NewAnswer.vue'
+import highlight from '../mixins/highlight'
 export default {
     props: ['question'],
     components:{Answer,NewAnswer},
+    mixins:[highlight],
     data(){
         return{
             questionId : this.question.id,
             count : this.question.answers_count,
             answers :[],
+            answersId : [],
             nextURL : null,
         }
     },
@@ -51,17 +54,27 @@ export default {
         add(answer){
             this.answers.push(answer)
             this.count++
+            this.$nextTick(()=>{
+                 this.highlight(`answer-${answer.id}`)
+            })
         },
         remove(index){
             this.answers.splice(index,1)
             this.count--
         },
         fetch(endpoint){
+            this.answersId = []
             axios.get(endpoint)
             .then(({data}) =>{
+                this.answersId = data.data.map(a=>a.id)
                 this.answers.push(... data.data)
                 this.nextURL = data.next_page_url
                 // console.log(data)
+            })
+            .then(()=>{
+                this.answersId.forEach(id =>{
+                    this.highlight(`answer-${id}`)
+                })
             })
         }
 

@@ -10,7 +10,9 @@
                 <div class="card-body">
                     <form @submit.prevent = "create">               
                         <div class="form-group">
-                            <textarea name="body" id="" rows="7" v-model="body" required class="form-control"></textarea>                                             
+                            <m-editor :body="body" name="new-answer">
+                                <textarea rows="10" class="form-control" v-model="body"  required></textarea>
+                            </m-editor>                        
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-lg btn-outline-primary" :disabled = "invalid">Submit</button>
@@ -22,8 +24,10 @@
     </div>
 </template>
 <script>
+import MEditor from './MEditor'
 export default {
     props:['questionId'],
+    components:{MEditor},
     data(){
         return{
             body:'',

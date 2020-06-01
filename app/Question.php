@@ -43,10 +43,12 @@ class Question extends Model
         return "unanswered";
     }
 
-    // site cripting attack protection
+    // site scripting attack protection
     public function getBodyHtmlAttribute(){
-        return clean($this->bodyHtml());
+        return $this->bodyHtml();
+        // return clean($this->bodyHtml());
     }
+
     public function excerpt($len){
         return str_limit(strip_tags($this->bodyHtml()),$len);
     }

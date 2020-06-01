@@ -1,9 +1,15 @@
+import Vote from '../components/Vote'
+import UserInfo from '../components/UserInfo'
+import MEditor from '../components/MEditor'
+import highlight from './highlight'
 export default{
     data(){
         return {
             editing : false
         }
     },
+    components:{Vote,UserInfo,MEditor},
+    mixins:[highlight],
     methods:{
         edit(){
             this.setEditCache()
@@ -11,7 +17,7 @@ export default{
         },
         cancel(){
             this.restoreFormCache()
-            this.editing = true
+            this.editing = false
         },
         setEditCache(){},
         restoreFormCache(){},
@@ -22,6 +28,7 @@ export default{
                this.bodyHtml = res.data.body_html
                this.$toast.success(res.data.message,'Success',{timeout:3000})
             })
+            .then(()=>this.highlight())
             .catch(err=>{
                 this.$toast.error(err.response.data.message,'Error',{timeout:3000})
             })
