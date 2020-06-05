@@ -55646,7 +55646,7 @@ var render = function() {
                     staticClass: "btn btn-lg btn-outline-primary",
                     attrs: { type: "submit", disabled: _vm.invalid }
                   },
-                  [_vm._v("Submit")]
+                  [_vm._v("Post Your Answer")]
                 )
               ])
             ]

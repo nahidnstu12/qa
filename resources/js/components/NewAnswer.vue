@@ -15,7 +15,7 @@
                             </m-editor>                        
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-lg btn-outline-primary" :disabled = "invalid">Submit</button>
+                            <button type="submit" class="btn btn-lg btn-outline-primary" :disabled = "invalid">Post Your Answer</button>
                         </div>                      
                     </form>
                 </div>
@@ -56,7 +56,8 @@ export default {
                 this.$toast.error(err.response.data.message,'Error')
             })
 
-        }
+        },
+       
 
     }
 }

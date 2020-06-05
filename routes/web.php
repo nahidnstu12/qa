@@ -16,10 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'QuestionsController@index');
 
-Auth::routes(['verify' => true]);
-// Auth::routes();
+// Auth::routes(['verify' => true]);
+Auth::routes();
 
-Route::middleware('verified')->group(function(){
+// Route::middleware('verified')->group(function(){
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::resource('questions','QuestionsController')->except('show','index');
@@ -33,7 +33,7 @@ Route::middleware('verified')->group(function(){
     
     Route::post('/questions/{question}/vote','VoteQuestionController'); //->name('up.vote');
     Route::post('/answers/{answer}/vote','VoteAnswerController');
-});
+// });
 
 Route::get('/questions/{slug}','QuestionsController@show')->name('questions.show');
 Route::get('/questions', 'QuestionsController@index')->name('questions.index');
