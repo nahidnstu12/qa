@@ -2371,19 +2371,13 @@ var md = new markdown_it__WEBPACK_IMPORTED_MODULE_0___default.a();
 md.use(markdown_it_prism__WEBPACK_IMPORTED_MODULE_1___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['body', 'name'],
-  components: {},
-  data: function data() {
-    return {};
-  },
-  mounted: function mounted() {// autosize(this.$el.querySelector('textarea'))
-  },
-  updated: function updated() {
-    autosize__WEBPACK_IMPORTED_MODULE_2___default()(this.$el.querySelector('textarea'));
-  },
   computed: {
     preview: function preview() {
       return md.render(this.body);
     }
+  },
+  updated: function updated() {
+    autosize__WEBPACK_IMPORTED_MODULE_2___default()(this.$el.querySelector('textarea'));
   },
   methods: {
     tabIndex: function tabIndex(tab) {

@@ -17,6 +17,7 @@
         "jquery": "^3.5.1",
         "laravel-mix": "^4.0.7",
         "lodash": "^4.17.5",
+        "markdown-it": "^11.0.0",
         "markdown-it-prism": "^2.0.5",
         "popper.js": "^1.12",
         "resolve-url-loader": "^2.3.1",
@@ -26,7 +27,5 @@
         "vue-izitoast": "^1.2.1",
         "vue-template-compiler": "^2.6.11"
     },
-    "dependencies": {
-        "markdown-it": "^11.0.0"
-    }
+    "dependencies": {}
 }

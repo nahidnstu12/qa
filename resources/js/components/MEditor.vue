@@ -20,31 +20,23 @@
     
 </template>
 <script>
-import MarkDown from 'markdown-it'
+import MarkdownIt from 'markdown-it'
 import prism from 'markdown-it-prism'
 import autosize from 'autosize'
 
-const md = new MarkDown()
+const md = new MarkdownIt()
 md.use(prism)
 
 export default {
     props:['body','name'],
-    components:{},
-    data(){
-        return{
 
-        }
-    },
-    mounted(){
-        // autosize(this.$el.querySelector('textarea'))
-    },
-    updated(){
-        autosize(this.$el.querySelector('textarea'))
-    },
     computed:{
         preview(){
             return md.render(this.body)
         }
+    },
+    updated(){
+        autosize(this.$el.querySelector('textarea'))
     },
     methods:{
         tabIndex(tab,hash=''){
