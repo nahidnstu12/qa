@@ -39,3 +39,8 @@ Route::get('/questions/{slug}','QuestionsController@show')->name('questions.show
 Route::get('/questions', 'QuestionsController@index')->name('questions.index');
 Route::get('/questions/{question}/answers', 'AnswersController@index')->name('questions.answers.index');
 
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
+
